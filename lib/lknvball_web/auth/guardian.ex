@@ -2,7 +2,7 @@ defmodule LknvballWeb.Guardian do
   use Guardian, otp_app: :lknvball
 
   def subject_for_token(res, _claims) do
-    IO.inspect(res, label: "subject for token: ")
+    # need to add authenticity check and expiration
     {:ok, res}
   end
 
@@ -10,9 +10,8 @@ defmodule LknvballWeb.Guardian do
   #   {:error, :notfound}
   # end
 
-  @spec resource_from_claims(any) :: {:ok, any}
   def resource_from_claims(res) do
-    IO.inspect(res, label: "resource from claims: ")
+    # need to add authenticity check and expiration
     {:ok, res}
   end
 
