@@ -12,7 +12,7 @@ defmodule Lknvball.Accounts do
   Begins registration process for oauth2 facebook sign in.
   """
   def register(%{provider: :facebook} = params) do
-    with {:ok, %{upserted_user: user}} <- upsert_user(params, tx: true) |> IO.inspect(),
+    with {:ok, %{upserted_user: user}} <- upsert_user(params, tx: true),
          {:ok, striped_user} <- upsert_stripe_user(user),
          {:ok, token, _claims} <- make_token(striped_user) do
       {:ok, token}
@@ -40,13 +40,9 @@ defmodule Lknvball.Accounts do
   def upsert_stripe_user(%{stripe_customer_id: stripe_customer_id, email: email} = user) do
     case Stripe.Customer.retrieve(stripe_customer_id) do
       {:ok, %Stripe.Customer{id: id}} ->
-        IO.puts("found existing id")
-        # just in case ids differ
         {:ok, user}
 
       {:error, %Stripe.Error{extra: %{http_status: 404}}} ->
-        IO.puts("Customer Not Found! Creating New Customer...")
-
         email
         |> Stripe.Customer.create()
         |> handle_stripe_create_user(user)
