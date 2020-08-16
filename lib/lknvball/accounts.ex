@@ -102,7 +102,7 @@ defmodule Lknvball.Accounts do
     Repo.all(User)
   end
 
-  def list_users(_, _) do
+  def list_users(_related, _args) do
     User
   end
 
