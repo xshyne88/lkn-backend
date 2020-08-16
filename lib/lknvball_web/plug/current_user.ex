@@ -1,4 +1,4 @@
-defmodule VisdocsWeb.Plug.AbsintheContext do
+defmodule LknvballWeb.Plug.AbsintheContext do
   @moduledoc false
 
   @behaviour Plug

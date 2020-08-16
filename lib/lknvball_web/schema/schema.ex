@@ -19,6 +19,11 @@ defmodule LknvballWeb.Schema do
   # subscription do
   # end
 
+  # node field do
+  #   %{type: :event, id: id}, _ ->
+  #     {:ok, Map.get(@event, id)}
+  # end
+
   node interface do
     resolve_type(fn
       %Lknvball.Accounts.User{}, _ ->

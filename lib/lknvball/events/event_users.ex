@@ -6,6 +6,7 @@ defmodule Lknvball.Events.EventUsers do
     field :paid, :boolean, default: false
     field :user_id, :id
     field :event_id, :id
+    field :guest_name, :string
 
     timestamps()
   end
@@ -13,7 +14,7 @@ defmodule Lknvball.Events.EventUsers do
   @doc false
   def changeset(event_users, attrs) do
     event_users
-    |> cast(attrs, [:paid])
-    |> validate_required([:paid])
+    |> cast(attrs, [:paid, :guest_name])
+    |> validate_required([:paid, :event_id])
   end
 end

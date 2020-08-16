@@ -8,6 +8,16 @@ defmodule LknvballWeb.Resolvers.Event do
     |> Connection.from_query(&Repo.all/1, args)
   end
 
+  def get_node(related, %{id: id}, ctx) do
+    IO.inspect(ctx.context)
+    IO.inspect(id, label: "id")
+    {:ok, Lknvball.Events.get_event!(id)}
+  end
+
+  def get_node(_, _ ,_ ) do
+    {:error, "expected id for event node"}
+  end
+
   def create_event(_, args, _) do
     Lknvball.Accounts.create_user(args)
   end

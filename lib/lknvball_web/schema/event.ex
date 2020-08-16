@@ -17,6 +17,12 @@ defmodule LknvballWeb.Schema.Event do
     connection field(:events, node_type: :event) do
       resolve(&Resolvers.Event.get_events_connection/3)
     end
+    field(:event, non_null(:event)) do
+      arg :id, non_null(:id)
+
+      middleware Absinthe.Relay.Node.ParseIDs, id: :event
+      resolve(&Resolvers.Event.get_node/3)
+    end
   end
 
   input_object :event_input do
