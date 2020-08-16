@@ -6,8 +6,12 @@ defmodule LknvballWeb.Router do
     plug :accepts, ["json"]
   end
 
-  scope "/api" do
-    pipe_through [:api]
+  pipeline :absinthe do
+    plug(LknvballWeb.Plug.AbsintheContext)
+  end
+
+  scope "/graphql" do
+    pipe_through [:api, :absinthe]
 
     forward "/", Absinthe.Plug, schema: LknvballWeb.Schema
   end
