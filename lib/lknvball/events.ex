@@ -21,6 +21,10 @@ defmodule Lknvball.Events do
     Repo.all(Event)
   end
 
+  def list_events(_related, _args) do
+    Event
+  end
+
   @doc """
   Gets a single event.
 
