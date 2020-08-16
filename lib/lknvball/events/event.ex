@@ -2,10 +2,13 @@ defmodule Lknvball.Events.Event do
   use Ecto.Schema
   import Ecto.Changeset
 
+  @derive {Jason.Encoder, only: [:cost, :image, :name]}
+
   schema "events" do
-    field :cost, :integer
+    field :cost, :integer, default: 20
     field :image, :string
     field :name, :string
+    field :start_time, :utc_datetime
 
     timestamps()
   end
@@ -13,7 +16,7 @@ defmodule Lknvball.Events.Event do
   @doc false
   def changeset(event, attrs) do
     event
-    |> cast(attrs, [:name, :image, :cost])
-    |> validate_required([:name, :image, :cost])
+    |> cast(attrs, [:name, :image, :cost, :start_time])
+    |> validate_required([:name])
   end
 end
