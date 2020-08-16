@@ -5,7 +5,7 @@ defmodule Lknvball.Repo.Migrations.CreateEvents do
     create table(:events) do
       add :name, :string
       add :image, :string
-      add :cost, :integer
+      add :cost, :integer, default: 20
       add :start_time, :utc_datetime
 
       timestamps()
