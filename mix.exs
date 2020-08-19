@@ -25,7 +25,8 @@ defmodule Lknvball.MixProject do
         :runtime_tools,
         :ueberauth_facebook,
         :corsica,
-        :stripity_stripe
+        :stripity_stripe,
+        :guardian
       ]
     ]
   end
