@@ -24,7 +24,7 @@ defmodule LknvballWeb.Router do
   end
 
   scope "/graphiql" do
-    pipe_through([:api])
+    pipe_through([:api, :absinthe])
 
     forward(
       "/",
