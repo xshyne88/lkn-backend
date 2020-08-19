@@ -15,12 +15,14 @@ defmodule LknvballWeb.Schema.Event do
 
   object :event_queries do
     connection field(:events, node_type: :event) do
+      middleware(LknvballWeb.Authentication)
       resolve(&Resolvers.Event.get_events_connection/3)
     end
-    field(:event, non_null(:event)) do
-      arg :id, non_null(:id)
 
-      middleware Absinthe.Relay.Node.ParseIDs, id: :event
+    field(:event, non_null(:event)) do
+      arg(:id, non_null(:id))
+
+      middleware(Absinthe.Relay.Node.ParseIDs, id: :event)
       resolve(&Resolvers.Event.get_node/3)
     end
   end
