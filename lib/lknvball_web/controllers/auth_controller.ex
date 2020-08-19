@@ -23,7 +23,7 @@ defmodule LknvballWeb.AuthController do
 
   defp get_frontend_url() do
     {:ok, frontend_url: url} = Application.fetch_env(:lknvball, :frontend)
-    {:ok, url} |> IO.inspect(label: "url")
+    {:ok, url}
   end
 
   defp get_oauth_params(%{
