@@ -38,7 +38,6 @@ config :ueberauth, Ueberauth,
 
 config :lknvball, LknvballWeb.Guardian,
   issuer: "lknvball",
-  # secret_key: System.get_env("SECRET_KEY_BASE") |> IO.inspect()
   secret_key: "8rGJlduQbjek/Vz7ZFAHz2vURwFp5dr16qoh+uV/sYVEmoPi2ugerfuoeZQ5x6tJ"
 
 config :ueberauth, Ueberauth.Strategy.Facebook.OAuth,

@@ -14,7 +14,8 @@ defmodule Lknvball.Events.EventUsers do
   @doc false
   def changeset(event_users, attrs) do
     event_users
-    |> cast(attrs, [:paid, :guest_name])
+    |> cast(attrs, [:paid, :event_id, :guest_name, :user_id])
     |> validate_required([:paid, :event_id])
+    |> unique_constraint(:user_id, name: :event_users_key)
   end
 end

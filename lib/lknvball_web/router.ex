@@ -7,6 +7,14 @@ defmodule LknvballWeb.Router do
   end
 
   pipeline :absinthe do
+    # plug Guardian.Plug.Pipeline,
+    #   module: LknvballWeb.Guardian,
+    #   error_handler: LknvballWeb.AuthErrorHandler
+
+    # plug Guardian.Plug.VerifySession, claims: %{"typ" => "access"}
+    # plug Guardian.Plug.VerifyHeader, claims: %{"typ" => "access"}
+    # # plug Guardian.Plug.EnsureAuthenticated
+    # plug(Guardian.Plug.LoadResource, allow_blank: true)
     plug(LknvballWeb.Plug.AbsintheContext)
   end
 
@@ -29,10 +37,10 @@ defmodule LknvballWeb.Router do
     forward(
       "/",
       Absinthe.Plug.GraphiQL,
-      schema: LknvballWeb.Schema
-      # json_codec: Jason,
-      # interface: :playground,
-      # socket: LknvballWeb.UserSocket
+      schema: LknvballWeb.Schema,
+      json_codec: Jason,
+      interface: :advanced,
+      socket: LknvballWeb.UserSocket
     )
   end
 

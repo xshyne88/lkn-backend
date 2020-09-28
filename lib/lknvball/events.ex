@@ -8,6 +8,12 @@ defmodule Lknvball.Events do
 
   alias Lknvball.Events.Event
 
+  def list_participants(%{id: id} = related) do
+    query = from e in Lknvball.Events.EventUsers, where: e.event_id == ^id
+
+    query
+  end
+
   @doc """
   Returns the list of events.
 
@@ -23,6 +29,26 @@ defmodule Lknvball.Events do
 
   def list_events(_related, _args) do
     Event
+  end
+
+  def list_events_by_date(_, %{days: days}) do
+    period = "day"
+
+    from(e in Event,
+      where: e.start_time > fragment("CURRENT_DATE - ('1 ' || ?)::interval * ?", ^period, ^days)
+    )
+  end
+
+  def list_future_events(_, _) do
+    from(e in Event,
+      where: e.start_time > fragment("CURRENT_DATE")
+    )
+  end
+
+  def list_past_events(_, _) do
+    from(e in Event,
+      where: e.start_time < fragment("CURRENT_DATE")
+    )
   end
 
   @doc """

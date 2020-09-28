@@ -17,6 +17,6 @@ defmodule Lknvball.Events.Event do
   def changeset(event, attrs) do
     event
     |> cast(attrs, [:name, :image, :cost, :start_time])
-    |> validate_required([:name])
+    |> validate_required([:name, :cost])
   end
 end

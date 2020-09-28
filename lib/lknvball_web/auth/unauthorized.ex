@@ -10,9 +10,9 @@ defmodule LknvballWeb.Authentication do
   end
 
   def authenticate(resolution) do
-    IO.inspect(resolution.context)
+    IO.inspect(resolution.context, label: "in auth")
 
     resolution
-    |> Absinthe.Resolution.put_result({:error, "unauthenticated"})
+    |> Absinthe.Resolution.put_result({:error, "unauthenticated: no current user"})
   end
 end

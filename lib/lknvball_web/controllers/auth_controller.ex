@@ -42,6 +42,4 @@ defmodule LknvballWeb.AuthController do
   end
 
   defp get_oauth_params(conn), do: Logger.warn("oauth2 failed from #{conn}")
-
-  # defp scrub_oauth2(e), do: IO.inspect(e)
 end
