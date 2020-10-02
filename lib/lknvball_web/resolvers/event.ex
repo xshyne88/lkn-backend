@@ -94,7 +94,6 @@ defmodule LknvballWeb.Resolvers.Event do
   ## CREATE EVENT MUTATION
 
   def create_event(_, %{input: input}, _) do
-    IO.inspect(input, label: "ARGS: ")
     Lknvball.Events.create_event(input)
     |> case do
       {:ok, event} -> {:ok, %{success: true, edge: %{node: event}}} # TODO: this "edge" doesn't have a cursor.  Is it valid?
@@ -104,5 +103,20 @@ defmodule LknvballWeb.Resolvers.Event do
 
   def create_event(_, _, _) do
     {:error, "expected input for event creation"}
+  end
+
+  ## UPDATE EVENT MUTATION
+
+  def update_event(_, %{input: %{id: id} = input}, _) do
+    Lknvball.Events.get_event!(id)
+    |> Lknvball.Events.update_event(input)
+    |> case do
+      {:ok, event} -> {:ok, %{success: true, edge: %{node: event}}}
+      _ -> {:ok, success: false}
+    end
+  end
+
+  def update_event(_, _, _) do
+    {:error, "invalid input"}
   end
 end

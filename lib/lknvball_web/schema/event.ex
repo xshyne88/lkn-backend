@@ -65,6 +65,11 @@ defmodule LknvballWeb.Schema.Event do
     field(:success, :boolean)
   end
 
+  object :update_event_payload do
+    field(:edge, :event_edge)
+    field(:success, :boolean)
+  end
+
   object :event_mutations do
     field(:sign_up, :sign_up_payload) do
       arg(:input, non_null(:sign_up_input))
@@ -83,8 +88,14 @@ defmodule LknvballWeb.Schema.Event do
     field(:create_event, :create_event_payload) do
       arg(:input, non_null(:event_input))
 
-      # middleware(Absinthe.Relay.Node.ParseIDs, input: [id: :event])
       resolve(&Resolvers.Event.create_event/3)
+    end
+
+    field(:update_event, :update_event_payload) do
+      arg(:input, non_null(:event_input))
+
+      middleware(Absinthe.Relay.Node.ParseIDs, input: [id: :event])
+      resolve(&Resolvers.Event.update_event/3)
     end
   end
 end
