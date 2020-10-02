@@ -43,8 +43,12 @@ defmodule LknvballWeb.Schema.Event do
 
   input_object :event_input do
     field(:id, :id)
-    field(:email, non_null(:string))
-    field(:admin, non_null(:boolean))
+    # field(:email, non_null(:string))
+    # field(:admin, non_null(:boolean))
+    field(:cost, non_null(:integer))
+    field(:name, non_null(:string))
+    field(:img_url, non_null(:string))
+    # field(:start_time, non_null(:utc_datetime)) TODO: Datetime
   end
 
   input_object :sign_up_input do
@@ -79,6 +83,7 @@ defmodule LknvballWeb.Schema.Event do
     field(:create_event, :create_event_payload) do
       arg(:input, non_null(:event_input))
 
+      # middleware(Absinthe.Relay.Node.ParseIDs, input: [id: :event])
       resolve(&Resolvers.Event.create_event/3)
     end
   end
