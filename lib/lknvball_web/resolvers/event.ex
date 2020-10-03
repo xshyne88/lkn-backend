@@ -108,7 +108,7 @@ defmodule LknvballWeb.Resolvers.Event do
   ## UPDATE EVENT MUTATION
 
   def update_event(_, %{input: %{id: id} = input}, _) do
-    Lknvball.Events.get_event!(id)
+    Lknvball.Events.get_event!(id) # TODO: handle errors here
     |> Lknvball.Events.update_event(input)
     |> case do
       {:ok, event} -> {:ok, %{success: true, edge: %{node: event}}}
