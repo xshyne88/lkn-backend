@@ -88,12 +88,14 @@ defmodule LknvballWeb.Schema.Event do
     field(:create_event, :create_event_payload) do
       arg(:input, non_null(:event_input))
 
+      middleware(LknvballWeb.Role, :admin)
       resolve(&Resolvers.Event.create_event/3)
     end
 
     field(:update_event, :update_event_payload) do
       arg(:input, non_null(:event_input))
 
+      middleware(LknvballWeb.Role, :admin)
       middleware(Absinthe.Relay.Node.ParseIDs, input: [id: :event])
       resolve(&Resolvers.Event.update_event/3)
     end
