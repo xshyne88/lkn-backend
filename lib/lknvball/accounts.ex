@@ -81,7 +81,7 @@ defmodule Lknvball.Accounts do
     %User{}
     |> User.changeset(params)
     |> Repo.insert(
-      on_conflict: {:replace_all_except, [:id, :stripe_customer_id, :inserted_at, :updated_at]},
+      on_conflict: {:replace_all_except, [:id, :admin,:stripe_customer_id, :inserted_at, :updated_at]},
       conflict_target: :email,
       returning: true
     )
