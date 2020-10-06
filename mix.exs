@@ -41,6 +41,7 @@ defmodule Lknvball.MixProject do
   defp deps do
     [
       {:absinthe, ">= 1.5.0"},
+      {:absinthe_error_payload, "~> 1.0"},
       {:absinthe_phoenix, "~> 2.0"},
       {:absinthe_plug, ">= 1.5.0"},
       {:absinthe_relay, ">= 1.5.0"},

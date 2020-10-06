@@ -1,4 +1,6 @@
 defmodule LknvballWeb.Schema.Event do
+  import AbsintheErrorPayload.Payload
+
   alias LknvballWeb.Resolvers
 
   use Absinthe.Schema.Notation
@@ -41,6 +43,12 @@ defmodule LknvballWeb.Schema.Event do
     end
   end
 
+  input_object :sign_up_input do
+    field(:event_id, non_null(:id))
+  end
+
+  payload_object(:sign_up_payload, :empty_payload)
+
   input_object :event_input do
     field(:id, :id)
     # field(:email, non_null(:string))
@@ -51,24 +59,9 @@ defmodule LknvballWeb.Schema.Event do
     # field(:start_time, non_null(:utc_datetime)) TODO: Datetime
   end
 
-  input_object :sign_up_input do
-    field(:event_id, non_null(:id))
-  end
+  payload_object(:create_event_payload, :event)
 
-  object :sign_up_payload do
-    field(:success, :boolean)
-    field(:already_signed_up, :boolean)
-  end
-
-  object :create_event_payload do
-    field(:edge, :event_edge)
-    field(:success, :boolean)
-  end
-
-  object :update_event_payload do
-    field(:edge, :event_edge)
-    field(:success, :boolean)
-  end
+  payload_object(:update_event_payload, :event)
 
   object :event_mutations do
     field(:sign_up, :sign_up_payload) do

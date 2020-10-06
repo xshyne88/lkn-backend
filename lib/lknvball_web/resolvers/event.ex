@@ -39,21 +39,21 @@ defmodule LknvballWeb.Resolvers.Event do
     |> handle_sign_up()
   end
 
-  def sign_up(_, _, _), do: {:error, :unauthorized}
+  def sign_up(_, _, _), do: {:error, :unknown}
 
-  def handle_sign_up({:ok, _}), do: {:ok, %{success: true}}
+  def handle_sign_up({:ok, _}), do: {:ok, nil}
 
   def handle_sign_up({:error, %Ecto.Changeset{action: :insert, errors: errors}}) do
     case errors[:user_id] do
       {"has already been taken", _} ->
-        {:ok, %{success: true, already_signed_up: true}}
+        {:ok, nil}
 
       _ ->
-        {:ok, %{success: false}}
+        {:error, errors}
     end
   end
 
-  def handle_sign_up(_), do: {:ok, %{success: false}}
+  def handle_sign_up(_), do: {:error, nil}
 
   ## CANCEL SIGN UP MUTATION
 
@@ -65,19 +65,15 @@ defmodule LknvballWeb.Resolvers.Event do
     |> handle_cancel_sign_up()
   end
 
-  def cancel_sign_up(_, _, _), do: {:error, :unauthorized}
+  def cancel_sign_up(_, _, _), do: {:error, :unknown}
 
   def handle_cancel_sign_up(nil) do
-    {:error, %{success: false, already_signed_up: false}}
+    {:error, "You are not signed up for this event"}
   end
 
   def handle_cancel_sign_up(event_user = %Events.EventUsers{}) do
     event_user
     |> Events.delete_event_users()
-    |> case do
-      {:ok, _} -> {:ok, %{success: true}}
-      _ -> {:ok, %{success: false}}
-    end
   end
 
   ## GET NODE BY ID
@@ -95,14 +91,10 @@ defmodule LknvballWeb.Resolvers.Event do
 
   def create_event(_, %{input: input}, _) do
     Lknvball.Events.create_event(input)
-    |> case do
-      {:ok, event} -> {:ok, %{success: true, edge: %{node: event}}} # TODO: this "edge" doesn't have a cursor.  Is it valid?
-      _ -> {:ok, %{success: false}}
-    end
   end
 
   def create_event(_, _, _) do
-    {:error, "expected input for event creation"}
+    {:error, :unknown}
   end
 
   ## UPDATE EVENT MUTATION
@@ -110,13 +102,9 @@ defmodule LknvballWeb.Resolvers.Event do
   def update_event(_, %{input: %{id: id} = input}, _) do
     Lknvball.Events.get_event!(id) # TODO: handle errors here
     |> Lknvball.Events.update_event(input)
-    |> case do
-      {:ok, event} -> {:ok, %{success: true, edge: %{node: event}}}
-      _ -> {:ok, success: false}
-    end
   end
 
   def update_event(_, _, _) do
-    {:error, "invalid input"}
+    {:error, :unknown}
   end
 end

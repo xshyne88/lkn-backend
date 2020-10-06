@@ -1,4 +1,6 @@
 defmodule LknvballWeb.Schema.User do
+  import AbsintheErrorPayload.Payload
+
   alias LknvballWeb.Resolvers
 
   use Absinthe.Schema.Notation
@@ -23,10 +25,7 @@ defmodule LknvballWeb.Schema.User do
     field(:admin, non_null(:boolean))
   end
 
-  object :create_user_payload do
-    field(:edge, :user_edge)
-    field(:success, :boolean)
-  end
+  payload_object(:create_user_payload, :user)
 
   object :user_mutations do
     field(:create_user, :create_user_payload) do
