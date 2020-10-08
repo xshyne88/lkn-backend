@@ -7,6 +7,7 @@ defmodule LknvballWeb.Schema do
   use Absinthe.Relay.Schema.Notation, :modern
 
   import_types(AbsintheErrorPayload.ValidationMessageTypes)
+  import_types(LknvballWeb.Schema.Enums)
   import_types(LknvballWeb.Schema.User)
   import_types(LknvballWeb.Schema.Event)
   import_types(LknvballWeb.Schema.EventUser)

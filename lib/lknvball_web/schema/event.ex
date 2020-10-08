@@ -19,8 +19,14 @@ defmodule LknvballWeb.Schema.Event do
     end
   end
 
+  input_object :event_sort_by do
+    field(:cost, :sort_direction)
+    field(:name, :sort_direction)
+  end
+
   object :event_queries do
     connection field(:events, node_type: :event) do
+      arg(:sort_by, :event_sort_by)
       # middleware(LknvballWeb.Authentication)
       resolve(&Resolvers.Event.get_events_connection/3)
     end

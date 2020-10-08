@@ -2,12 +2,14 @@ defmodule LknvballWeb.Resolvers.Event do
   alias Absinthe.Relay.Connection
   alias Lknvball.Repo
   alias Lknvball.Events
+  alias LknvballWeb.Helpers.Sorts
 
   ## GET EVENTS QUERY
 
   def get_events_connection(related, args, _ctx) do
     related
     |> Events.list_events(args)
+    |> Sorts.apply_to_query(args)
     |> Connection.from_query(&Repo.all/1, args)
   end
 
