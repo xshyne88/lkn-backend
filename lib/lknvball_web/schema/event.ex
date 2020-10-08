@@ -22,6 +22,7 @@ defmodule LknvballWeb.Schema.Event do
   input_object :event_sort_by do
     field(:cost, :sort_direction)
     field(:name, :sort_direction)
+    field(:start_time, :sort_direction)
   end
 
   object :event_queries do
