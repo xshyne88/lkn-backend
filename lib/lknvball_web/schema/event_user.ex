@@ -1,5 +1,5 @@
 defmodule LknvballWeb.Schema.EventUser do
-  alias LknvballWeb.Resolvers
+  # alias LknvballWeb.Resolvers
 
   use Absinthe.Schema.Notation
   use Absinthe.Relay.Schema.Notation, :modern

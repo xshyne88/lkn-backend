@@ -13,9 +13,10 @@ defmodule LknvballWeb.Helpers.Sorts do
     query
   end
 
-  defp create_order_by_list(sort_by_field_map) do # todo: add a guard here?
+  defp create_order_by_list(sort_by_field_map) when is_map(sort_by_field_map) do
     sort_by_field_map
-    |> Enum.to_list # List will be sorted alphabetically by the key
+    # List will be sorted alphabetically by the key
+    |> Enum.to_list()
     |> Enum.map(&flip_tuple/1)
   end
 

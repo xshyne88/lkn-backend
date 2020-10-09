@@ -8,7 +8,7 @@ defmodule Lknvball.Events do
 
   alias Lknvball.Events.Event
 
-  def list_participants(%{id: id} = related) do
+  def list_participants(%{id: id}) do
     query = from e in Lknvball.Events.EventUsers, where: e.event_id == ^id
 
     query
