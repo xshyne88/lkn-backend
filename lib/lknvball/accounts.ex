@@ -39,7 +39,7 @@ defmodule Lknvball.Accounts do
 
   def upsert_stripe_user(%{stripe_customer_id: stripe_customer_id, email: email} = user) do
     case Stripe.Customer.retrieve(stripe_customer_id) do
-      {:ok, %Stripe.Customer{id: id}} ->
+      {:ok, %Stripe.Customer{id: _}} ->
         {:ok, user}
 
       {:error, %Stripe.Error{extra: %{http_status: 404}}} ->
@@ -77,11 +77,12 @@ defmodule Lknvball.Accounts do
   %User{}
 
   """
-  def upsert_user(%{email: email} = params) do
+  def upsert_user(%{email: _} = params) do
     %User{}
     |> User.changeset(params)
     |> Repo.insert(
-      on_conflict: {:replace_all_except, [:id, :admin,:stripe_customer_id, :inserted_at, :updated_at]},
+      on_conflict:
+        {:replace_all_except, [:id, :admin, :stripe_customer_id, :inserted_at, :updated_at]},
       conflict_target: :email,
       returning: true
     )

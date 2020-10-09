@@ -1,7 +1,7 @@
 defmodule LknvballWeb.Guardian do
   use Guardian, otp_app: :lknvball
 
-  def subject_for_token(res, claims) do
+  def subject_for_token(res, _claims) do
     {:ok, res}
   end
 
