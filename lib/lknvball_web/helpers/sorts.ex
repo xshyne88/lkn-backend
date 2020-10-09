@@ -1,8 +1,14 @@
 defmodule LknvballWeb.Helpers.Sorts do
   import Ecto.Query
 
-  # TODO: Make sorts order safe
+  @doc """
+  Applies provided sorts to an ecto query using the order_by function.
+  Sort format should be {field_name: :sort_direction} where :sort_direction
+  is defined in the schema enums.
+  """
   def apply_to_query(query, %{sort_by: sort_by}) do
+    # TODO: Make sorts order safe
+
     order_by_list = create_order_by_list(sort_by)
 
     query
