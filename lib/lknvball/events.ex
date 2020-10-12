@@ -9,7 +9,7 @@ defmodule Lknvball.Events do
   alias Lknvball.Events.Event
 
   def list_participants(%{id: id}) do
-    query = from e in Lknvball.Events.EventUsers, where: e.event_id == ^id
+    query = from e in Lknvball.Events.EventUser, where: e.event_id == ^id
 
     query
   end
@@ -132,7 +132,7 @@ defmodule Lknvball.Events do
     Event.changeset(event, attrs)
   end
 
-  alias Lknvball.Events.EventUsers
+  alias Lknvball.Events.EventUser
 
   @doc """
   Returns the list of event_users.
@@ -140,11 +140,11 @@ defmodule Lknvball.Events do
   ## Examples
 
       iex> list_event_users()
-      [%EventUsers{}, ...]
+      [%EventUser{}, ...]
 
   """
   def list_event_users do
-    Repo.all(EventUsers)
+    Repo.all(EventUser)
   end
 
   @doc """
@@ -155,13 +155,13 @@ defmodule Lknvball.Events do
   ## Examples
 
       iex> get_event_users!(123)
-      %EventUsers{}
+      %EventUser{}
 
       iex> get_event_users!(456)
       ** (Ecto.NoResultsError)
 
   """
-  def get_event_users!(id), do: Repo.get!(EventUsers, id)
+  def get_event_users!(id), do: Repo.get!(EventUser, id)
 
   @doc """
   Creates a event_users.
@@ -169,15 +169,15 @@ defmodule Lknvball.Events do
   ## Examples
 
       iex> create_event_users(%{field: value})
-      {:ok, %EventUsers{}}
+      {:ok, %EventUser{}}
 
       iex> create_event_users(%{field: bad_value})
       {:error, %Ecto.Changeset{}}
 
   """
   def create_event_users(attrs \\ %{}) do
-    %EventUsers{}
-    |> EventUsers.changeset(attrs)
+    %EventUser{}
+    |> EventUser.changeset(attrs)
     |> Repo.insert()
   end
 
@@ -187,15 +187,15 @@ defmodule Lknvball.Events do
   ## Examples
 
       iex> update_event_users(event_users, %{field: new_value})
-      {:ok, %EventUsers{}}
+      {:ok, %EventUser{}}
 
       iex> update_event_users(event_users, %{field: bad_value})
       {:error, %Ecto.Changeset{}}
 
   """
-  def update_event_users(%EventUsers{} = event_users, attrs) do
+  def update_event_users(%EventUser{} = event_users, attrs) do
     event_users
-    |> EventUsers.changeset(attrs)
+    |> EventUser.changeset(attrs)
     |> Repo.update()
   end
 
@@ -205,13 +205,13 @@ defmodule Lknvball.Events do
   ## Examples
 
       iex> delete_event_users(event_users)
-      {:ok, %EventUsers{}}
+      {:ok, %EventUser{}}
 
       iex> delete_event_users(event_users)
       {:error, %Ecto.Changeset{}}
 
   """
-  def delete_event_users(%EventUsers{} = event_users) do
+  def delete_event_users(%EventUser{} = event_users) do
     Repo.delete(event_users)
   end
 
@@ -221,10 +221,10 @@ defmodule Lknvball.Events do
   ## Examples
 
       iex> change_event_users(event_users)
-      %Ecto.Changeset{data: %EventUsers{}}
+      %Ecto.Changeset{data: %EventUser{}}
 
   """
-  def change_event_users(%EventUsers{} = event_users, attrs \\ %{}) do
-    EventUsers.changeset(event_users, attrs)
+  def change_event_users(%EventUser{} = event_users, attrs \\ %{}) do
+    EventUser.changeset(event_users, attrs)
   end
 end

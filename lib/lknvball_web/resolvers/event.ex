@@ -62,7 +62,7 @@ defmodule LknvballWeb.Resolvers.Event do
   def cancel_sign_up(_, %{input: %{event_id: event_id}}, %{
         context: %{current_user: %{id: user_id}}
       }) do
-    Events.EventUsers
+    Events.EventUser
     |> Repo.get_by(%{event_id: event_id, user_id: user_id})
     |> handle_cancel_sign_up()
   end
@@ -73,7 +73,7 @@ defmodule LknvballWeb.Resolvers.Event do
     {:error, "You are not signed up for this event"}
   end
 
-  def handle_cancel_sign_up(event_user = %Events.EventUsers{}) do
+  def handle_cancel_sign_up(event_user = %Events.EventUser{}) do
     event_user
     |> Events.delete_event_users()
   end
@@ -102,7 +102,8 @@ defmodule LknvballWeb.Resolvers.Event do
   ## UPDATE EVENT MUTATION
 
   def update_event(_, %{input: %{id: id} = input}, _) do
-    Lknvball.Events.get_event!(id) # TODO: handle errors here
+    # TODO: handle errors here
+    Lknvball.Events.get_event!(id)
     |> Lknvball.Events.update_event(input)
   end
 

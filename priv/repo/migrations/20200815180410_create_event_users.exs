@@ -1,4 +1,4 @@
-defmodule Lknvball.Repo.Migrations.CreateEventUsers do
+defmodule Lknvball.Repo.Migrations.CreateEventUser do
   use Ecto.Migration
 
   @table :event_users

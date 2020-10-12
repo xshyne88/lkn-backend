@@ -13,6 +13,8 @@ defmodule Lknvball.Accounts.User do
 
     field :stripe_customer_id, :string
 
+    has_many :event_users, Lknvball.Events.EventUser
+
     timestamps()
   end
 

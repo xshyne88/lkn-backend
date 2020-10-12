@@ -8,6 +8,15 @@ defmodule Lknvball.Accounts do
   alias Lknvball.Repo
   alias LknvballWeb.Guardian
 
+  # Not sure if it make sense to scope this function to just users?
+  def dataload_user do
+    Dataloader.Ecto.new(Repo, query: &query_user/2)
+  end
+
+  def query_user(queryable, _params) do
+    queryable
+  end
+
   @doc """
   Begins registration process for oauth2 facebook sign in.
   """

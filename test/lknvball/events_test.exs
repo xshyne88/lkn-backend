@@ -67,7 +67,7 @@ defmodule Lknvball.EventsTest do
   end
 
   describe "event_users" do
-    alias Lknvball.Events.EventUsers
+    alias Lknvball.Events.EventUser
 
     @valid_attrs %{paid: true}
     @update_attrs %{paid: false}
@@ -93,7 +93,7 @@ defmodule Lknvball.EventsTest do
     end
 
     test "create_event_users/1 with valid data creates a event_users" do
-      assert {:ok, %EventUsers{} = event_users} = Events.create_event_users(@valid_attrs)
+      assert {:ok, %EventUser{} = event_users} = Events.create_event_users(@valid_attrs)
       assert event_users.paid == true
     end
 
@@ -103,7 +103,10 @@ defmodule Lknvball.EventsTest do
 
     test "update_event_users/2 with valid data updates the event_users" do
       event_users = event_users_fixture()
-      assert {:ok, %EventUsers{} = event_users} = Events.update_event_users(event_users, @update_attrs)
+
+      assert {:ok, %EventUser{} = event_users} =
+               Events.update_event_users(event_users, @update_attrs)
+
       assert event_users.paid == false
     end
 
@@ -115,7 +118,7 @@ defmodule Lknvball.EventsTest do
 
     test "delete_event_users/1 deletes the event_users" do
       event_users = event_users_fixture()
-      assert {:ok, %EventUsers{}} = Events.delete_event_users(event_users)
+      assert {:ok, %EventUser{}} = Events.delete_event_users(event_users)
       assert_raise Ecto.NoResultsError, fn -> Events.get_event_users!(event_users.id) end
     end
 
