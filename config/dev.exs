@@ -2,8 +2,8 @@ use Mix.Config
 
 # Configure your database
 config :lknvball, Lknvball.Repo,
-  username: "chase",
-  password: "abc123",
+  username: System.get_env("PG_USERNAME") || "postgres",
+  password: System.get_env("PG_PWD") || "postgres",
   database: "lknvball_dev",
   hostname: "localhost",
   show_sensitive_data_on_connection_error: true,
