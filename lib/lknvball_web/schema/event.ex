@@ -54,7 +54,7 @@ defmodule LknvballWeb.Schema.Event do
     field(:event_id, non_null(:id))
   end
 
-  payload_object(:sign_up_payload, :empty_payload)
+  payload_object(:sign_up_payload, :event)
 
   input_object :event_input do
     field(:id, :id)
