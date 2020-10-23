@@ -2,7 +2,7 @@ use Mix.Config
 
 # Configure your database
 config :lknvball, Lknvball.Repo,
-  username: "postgres",
+  username: "chase",
   password: "abc123",
   database: "lknvball_dev",
   hostname: "localhost",
