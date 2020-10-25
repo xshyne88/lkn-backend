@@ -26,18 +26,20 @@ defmodule LknvballWeb.AuthController do
     {:ok, url}
   end
 
-  defp get_oauth_params(%{
-         assigns: %{
-           ueberauth_auth: %{
-             info: %{
-               email: email,
-               image: image
-             },
-             provider: provider,
-             uid: uid
+  defp get_oauth_params(
+         %{
+           assigns: %{
+             ueberauth_auth: %{
+               info: %{
+                 email: email,
+                 image: image
+               },
+               provider: provider,
+               uid: uid
+             }
            }
-         }
-       }) do
+         } = params
+       ) do
     {:ok, %{email: email, provider: provider, uid: uid, image: image}}
   end
 

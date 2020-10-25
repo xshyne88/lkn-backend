@@ -14,6 +14,11 @@ defmodule LknvballWeb.Schema.Event do
     field(:cost, :integer)
     field(:start_time, :string)
 
+    field(:attending, :boolean) do
+      # resolve(fn _, _, _ -> {:ok, false} end)
+      resolve(&Resolvers.Event.am_i_attending/3)
+    end
+
     connection field(:participants, node_type: :event_user) do
       resolve(&Resolvers.Event.get_participants_connection/3)
     end
@@ -63,6 +68,7 @@ defmodule LknvballWeb.Schema.Event do
     field(:cost, non_null(:integer))
     field(:name, non_null(:string))
     field(:img_url, non_null(:string))
+
     # field(:start_time, non_null(:utc_datetime)) TODO: Datetime
   end
 

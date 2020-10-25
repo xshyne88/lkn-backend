@@ -9,11 +9,11 @@ config :lknvball, Lknvball.Repo,
   show_sensitive_data_on_connection_error: true,
   pool_size: 10
 
-if System.get_env("GITHUB_ACTIONS") do
-  config :app, App.Repo,
-    username: "postgres",
-    password: "postgres"
-end
+# if System.get_env("GITHUB_ACTIONS") do
+#   config :app, App.Repo,
+#     username: "postgres",
+#     password: "postgres"
+# end
 
 config :lknvball, :frontend, frontend_url: "http://localhost:3000"
 

@@ -13,6 +13,16 @@ defmodule LknvballWeb.Resolvers.Event do
     |> Connection.from_query(&Repo.all/1, args)
   end
 
+  def am_i_attending(%{id: event_id}, _, %{context: %{current_user: current_user}}) do
+    event_user =
+      Events.EventUser
+      |> Repo.get_by(%{event_id: event_id, user_id: current_user.id})
+
+    if is_nil(event_user), do: {:ok, false}, else: {:ok, true}
+  end
+
+  def am_i_attending(_, _, _), do: {:error, :unknown}
+
   def get_past_events_connection(related, args, _ctx) do
     related
     |> Events.list_past_events(args)
@@ -31,6 +41,11 @@ defmodule LknvballWeb.Resolvers.Event do
     |> Connection.from_query(&Repo.all/1, args)
   end
 
+  def get_participants_connection(_, _, _) do
+    IO.warn("no id found for participants")
+    {:error, :unknown}
+  end
+
   # def get_users_connection(_, _, _), do: {:error, :unauthorized}
 
   ## SIGN UP MUTATION
@@ -43,7 +58,12 @@ defmodule LknvballWeb.Resolvers.Event do
 
   def sign_up(_, _, _), do: {:error, :unknown}
 
-  def handle_sign_up({:ok, _}), do: {:ok, nil}
+  def handle_sign_up({:ok, event_user}) do
+    event_user.event_id
+    |> Events.get_event!()
+    # TODO: handle failure
+    |> (fn e -> {:ok, e} end).()
+  end
 
   def handle_sign_up({:error, %Ecto.Changeset{action: :insert, errors: errors}}) do
     case errors[:user_id] do
@@ -76,6 +96,17 @@ defmodule LknvballWeb.Resolvers.Event do
   def handle_cancel_sign_up(event_user = %Events.EventUser{}) do
     event_user
     |> Events.delete_event_users()
+    |> case do
+      {:ok, _} ->
+        event_user.event_id
+        |> Events.get_event!()
+        # TODO: handle failure
+        |> (fn e -> {:ok, e} end).()
+    end
+  end
+
+  def handle_cancel_sign_up(_) do
+    {:error, :unknown}
   end
 
   ## GET NODE BY ID

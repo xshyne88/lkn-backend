@@ -33,10 +33,12 @@ defmodule Lknvball.Accounts do
 
   def register(_), do: {:error, "check register oauth function, something went wrong"}
 
+  # the deletes are because certain fields cant be encoded
   def make_token(striped_user) do
     striped_user
     |> Map.from_struct()
     |> Map.delete(:__meta__)
+    |> Map.delete(:event_users)
     |> Guardian.encode_and_sign()
   end
 
