@@ -22,10 +22,6 @@ defmodule LknvballWeb.Schema do
     import_fields(:event_mutations)
   end
 
-  object :empty_payload do
-    description("This mutation has no meaningful return")
-  end
-
   # subscription do
   # end
 
