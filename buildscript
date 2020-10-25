@@ -1,0 +1,17 @@
+#!/usr/bin/env bash
+# exit on error
+
+set -o errexit
+
+mix deps.get --only prod
+MIX_ENV=prod mix compile
+
+# assets
+# none
+
+
+# build release
+MIX_ENV=prod mix release --overwrite
+
+# migrations
+_build/prod/rel/lkn-backend/bin/lkn-backend eval "Lknvball.Release.migrate"
