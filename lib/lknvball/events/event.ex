@@ -10,6 +10,8 @@ defmodule Lknvball.Events.Event do
     field :name, :string
     field :start_time, :utc_datetime
 
+    has_many :event_users, Lknvball.Events.EventUser
+
     timestamps()
   end
 

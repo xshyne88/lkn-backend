@@ -38,7 +38,7 @@ defmodule LknvballWeb.Schema do
       %Lknvball.Events.Event{}, _ ->
         :event
 
-      %Lknvball.Events.EventUsers{}, _ ->
+      %Lknvball.Events.EventUser{}, _ ->
         :event_user
 
       _, _ ->
@@ -46,19 +46,34 @@ defmodule LknvballWeb.Schema do
     end)
   end
 
+  def context(ctx) do
+    loader =
+      Dataloader.new()
+      |> Dataloader.add_source(Lknvball.Accounts.User, Lknvball.Accounts.dataload_user())
+
+    # additional sources
+
+    Map.put(ctx, :loader, loader)
+  end
+
   # default middleware that returns unauthorixed if no current user from token
   def middleware(middleware, _field, %Absinthe.Type.Object{identifier: identifier})
       when identifier in [:query, :subscription] do
-    [LknvballWeb.Authentication | middleware]
+    [LknvballWeb.Authentication] ++
+      middleware
   end
 
   def middleware(middleware, _field, %Absinthe.Type.Object{identifier: :mutation}) do
     [LknvballWeb.Authentication] ++
-    middleware ++
-    [&build_payload/2]
+      middleware ++
+      [&build_payload/2]
   end
 
   def middleware(middleware, _field, _object) do
     middleware
+  end
+
+  def plugins do
+    [Absinthe.Middleware.Dataloader] ++ Absinthe.Plugin.defaults()
   end
 end
