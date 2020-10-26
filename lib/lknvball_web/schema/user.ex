@@ -11,6 +11,7 @@ defmodule LknvballWeb.Schema.User do
   node object(:user) do
     field(:email, non_null(:string))
     field(:admin, non_null(:boolean))
+    field(:image, :string)
   end
 
   object :user_queries do

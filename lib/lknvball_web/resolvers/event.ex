@@ -39,6 +39,7 @@ defmodule LknvballWeb.Resolvers.Event do
     related
     |> Events.list_participants()
     |> Connection.from_query(&Repo.all/1, args)
+    |> IO.inspect()
   end
 
   def get_participants_connection(_, _, _) do

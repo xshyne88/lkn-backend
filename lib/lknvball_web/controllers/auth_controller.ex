@@ -40,6 +40,7 @@ defmodule LknvballWeb.AuthController do
            }
          } = params
        ) do
+        IO.inspect(params)
     {:ok, %{email: email, provider: provider, uid: uid, image: image}}
   end
 
