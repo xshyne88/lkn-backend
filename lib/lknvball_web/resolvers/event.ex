@@ -13,12 +13,13 @@ defmodule LknvballWeb.Resolvers.Event do
     |> Connection.from_query(&Repo.all/1, args)
   end
 
-  def am_i_attending(%{id: event_id}, _, %{context: %{current_user: current_user}}) do
-    event_user =
-      Events.EventUser
-      |> Repo.get_by(%{event_id: event_id, user_id: current_user.id})
-
-    if is_nil(event_user), do: {:ok, false}, else: {:ok, true}
+  def am_i_attending(%{id: event_id}, _, %{context: %{current_user: %{id: user_id}}}) do
+    Events.EventUser
+    |> Repo.get_by(%{event_id: event_id, user_id: user_id})
+    |> case do
+      nil -> {:ok, false}
+      _ -> {:ok, true}
+    end
   end
 
   def am_i_attending(_, _, _), do: {:error, :unknown}
@@ -46,8 +47,6 @@ defmodule LknvballWeb.Resolvers.Event do
     IO.warn("no id found for participants")
     {:error, :unknown}
   end
-
-  # def get_users_connection(_, _, _), do: {:error, :unauthorized}
 
   ## SIGN UP MUTATION
 
@@ -135,7 +134,8 @@ defmodule LknvballWeb.Resolvers.Event do
 
   def update_event(_, %{input: %{id: id} = input}, _) do
     # TODO: handle errors here
-    Lknvball.Events.get_event!(id)
+    id
+    |> Lknvball.Events.get_event!()
     |> Lknvball.Events.update_event(input)
   end
 

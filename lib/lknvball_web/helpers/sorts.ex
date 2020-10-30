@@ -6,6 +6,7 @@ defmodule LknvballWeb.Helpers.Sorts do
   Sort format should be {field_name: :sort_direction} where :sort_direction
   is defined in the schema enums.
   """
+
   def apply_to_query(query, %{sort_by: sort_by}) do
     # TODO: Make sorts order safe
 
@@ -20,8 +21,8 @@ defmodule LknvballWeb.Helpers.Sorts do
   end
 
   defp create_order_by_list(sort_by_field_map) when is_map(sort_by_field_map) do
-    sort_by_field_map
     # List will be sorted alphabetically by the key
+    sort_by_field_map
     |> Enum.to_list()
     |> Enum.map(&flip_tuple/1)
   end
